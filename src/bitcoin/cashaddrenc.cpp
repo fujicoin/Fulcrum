@@ -24,12 +24,12 @@
 namespace bitcoin {
 
 /// convenient work-alike added by Calin
-const CChainParams TestNetChainParams    = { "bchtest" },
-                   TestNet4ChainParams   = { "bchtest" },
-                   ScaleNetChainParams   = { "bchtest" },
-                   ChipNetChainParams    = { "bchtest" },
-                   RegTestNetChainParams = { "bchreg" },
-                   MainNetChainParams    = { "bitcoincash" };
+const CChainParams TestNetChainParams    = { "fjctest" },
+                   TestNet4ChainParams   = { "fjctest" },
+                   ScaleNetChainParams   = { "fjctest" },
+                   ChipNetChainParams    = { "fjctest" },
+                   RegTestNetChainParams = { "fjcreg" },
+                   MainNetChainParams    = { "fujicoin" };
 
 namespace {
 

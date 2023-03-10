@@ -38,7 +38,7 @@ struct Exception : std::runtime_error
 struct InternalError : Exception { using Exception::Exception; ~InternalError() override; };
 struct BadArgs : Exception { using Exception::Exception; ~BadArgs() override; };
 
-#define APPNAME "Fulcrum"
+#define APPNAME "Fujicoin Fulcrum"
 #define VERSION "1.9.0"
 #ifdef QT_DEBUG
 inline constexpr bool isReleaseBuild() { return false; }
