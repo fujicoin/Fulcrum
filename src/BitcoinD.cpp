@@ -205,32 +205,8 @@ namespace {
     };
 
     BitcoinDVersionParseResult::BitcoinDVersionParseResult(unsigned val, const QString &subversion) {
-        // e.g. 0.20.6 comes in like this from bitcoind (as an unsigned int): 200600 (millions, 10-thousands, hundreds).
-        // Note: some bchd versions have a weird version int with a different format than above, so we handle bchd
-        // differently.
-        if (subversion.startsWith("/bchd")) {
-            // bchd is quirky. We can't rely on its "version" integer since the algorithm for its packing
-            // is bizarre in older versions. (In newer versons Josh says he changed it to match bitcoind).
-            // Instead, we parse the subversion string: "/bchd:maj.min.rev.../"
-            if (const int colon = subversion.indexOf(':'), trailSlash = subversion.lastIndexOf('/'); colon == 5 && trailSlash > colon) {
-                const int len = trailSlash - (colon + 1);
-                if (len > 0)
-                    // try and parse everything after /bchd:
-                    version = Version(subversion.mid(colon + 1, len));
-            }
-            if (!version.isValid())
-                // hmm.. subversion isn't "/bchd:x.y.z.../" -> fall back to unpacking the integer value (only works on newer bchd)
-                version = Version::BitcoinDCompact(val);
-            isBchd = true;
-        } else {
-            isCore = subversion.startsWith("/Satoshi:");
-            isBU = subversion.startsWith("/BCH Unlimited:");
-            isBCHN = subversion.startsWith("/Bitcoin Cash Node:");
-            isLTC = subversion.startsWith("/LitecoinCore:");
-            isFlowee = subversion.startsWith("/Flowee:");
-            // regular bitcoind, "version" is reliable and always the same format
-            version = Version::BitcoinDCompact(val);
-        }
+        isCore = true;
+        version = Version::BitcoinDCompact(val);
     }
 
     bool BitcoinDVersionParseResult::definitelyLacksDSProofRPC() const {
@@ -305,9 +281,7 @@ void BitcoinDMgr::refreshBitcoinDNetworkInfo()
                 bitcoinDInfo.hasDSProofRPC = false;
             } // end lock scope
             // be sure to announce whether remote bitcoind is bitcoin core (this determines whether we use segwit or not)
-            BTC::Coin coin = BTC::Coin::BCH; // default BCH if unknown (not segwit)
-            if (res.isCore) coin = BTC::Coin::BTC; // segwit
-            else if (res.isLTC) coin = BTC::Coin::LTC; // segwit
+            BTC::Coin coin = BTC::Coin::BTC; // for BTC like coin only (segwit)
             emit coinDetected(coin);
             // next, be sure to set up the ping time appropriately for bchd vs bitcoind
             resetPingTimers(int(res.isBchd ? PingTimes::BCHD : PingTimes::Normal));
