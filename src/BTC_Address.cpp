@@ -48,12 +48,12 @@ namespace BTC
     namespace {
         // Hash of Net -> [Hash of VerByte -> Kind]
         const QHash<Net, QHash<quint8, Address::Kind> > netVerByteKindMap = {
-            { MainNet,      { {0, Address::P2PKH }, {5, Address::P2SH} } },
-            { TestNet,    { {111, Address::P2PKH }, {196, Address::P2SH} } },
-            { TestNet4,   { {111, Address::P2PKH }, {196, Address::P2SH} } },
-            { ScaleNet,   { {111, Address::P2PKH }, {196, Address::P2SH} } },
-            { ChipNet,    { {111, Address::P2PKH }, {196, Address::P2SH} } },
-            { RegTestNet, { {111, Address::P2PKH }, {196, Address::P2SH} } },
+            { MainNet,      { {36, Address::P2PKH }, {16, Address::P2SH} } },
+            { TestNet,    { {74, Address::P2PKH }, {196, Address::P2SH} } },
+            { TestNet4,   { {74, Address::P2PKH }, {196, Address::P2SH} } },
+            { ScaleNet,   { {74, Address::P2PKH }, {196, Address::P2SH} } },
+            { ChipNet,    { {74, Address::P2PKH }, {196, Address::P2SH} } },
+            { RegTestNet, { {74, Address::P2PKH }, {196, Address::P2SH} } },
         };
         Byte verByteForNetAndKind(Net net, Address::Kind kind) {
             if (kind == Address::TOKEN_P2PKH) kind = Address::P2PKH; // hack to support TOKEN_P2PKH
