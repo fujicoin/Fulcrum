@@ -1919,14 +1919,14 @@ void Server::rpc_blockchain_transaction_broadcast(Client *c, const RPC::BatchId 
     const QByteArray txkey = (!rawtxhex.isEmpty() ? BTC::HashOnce(Util::ParseHexFast(rawtxhex)).left(16) : QByteArrayLiteral("xx"));
     // no need to validate hex here -- bitcoind does validation for us!
     QVariantList params { rawtxhex } ;
-    if (isBTC()
-            && bitcoindmgr->getBitcoinDVersion() >= Version{0,25,0}) {
+    //if (isBTC()
+    //        && bitcoindmgr->getBitcoinDVersion() >= Version{0,25,0}) {
         // bitcoin core 25.0+ requires specifying maxburnamount in sendrawtransaction call
         // which also requires first sending maxfeerate, set to 0.1btc by default in core
-        params.append(0.1);
+    //    params.append(0.1);
         // set maxburnrate to max btc supply to preserve pre-25.0 functionality
-        params.append(21000000);
-    }
+    //    params.append(21000000);
+    //}
     generic_async_to_bitcoind(c, batchId, m.id, "sendrawtransaction", params,
         // print to log, echo bitcoind's reply to client
         [size=rawtxhex.length()/2, c, this, txkey](const RPC::Message & reply){
