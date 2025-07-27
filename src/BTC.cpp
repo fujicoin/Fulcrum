@@ -188,7 +188,7 @@ namespace BTC
         return nameNetMap.value(name, Net::Invalid /* default if not found */);
     }
 
-    namespace { const QString coinNameBCH{"BCH"}, coinNameBTC{"BTC"}, coinNameLTC{"LTC"}; }
+    namespace { const QString coinNameBCH{"BCH"}, coinNameBTC{"FJC"}, coinNameLTC{"LTC"}; }
     QString coinToName(Coin c) {
         QString ret; // for NRVO
         switch (c) {
